@@ -1,0 +1,10 @@
+name: commandspy
+main: me.korikisulda.commandspy.commandspy
+version: 1.6
+description: >
+             A - er - simple? plugin to tell you what everyone's doing.
+commands:
+    commandspy:
+      description: Access commandspy subcommands
+      usage: /commandspy help
+depend: [WorldEdit]
