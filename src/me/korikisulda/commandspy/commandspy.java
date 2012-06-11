@@ -157,9 +157,11 @@ public class commandspy extends JavaPlugin {
 					sender.sendMessage("/commandspy help " + ChatColor.GRAY
 							+ " - Display this help message.");
 					sender.sendMessage("/commandspy version " + ChatColor.GRAY
-							+ " - gets version information.");
+							+ " - Gets version information.");
 					sender.sendMessage("/commandspy tool" + ChatColor.GRAY
-							+ " - toggles worldedit history tool");
+							+ " - Toggles worldedit history tool");
+					sender.sendMessage("/commandspy ignore <add|remove|list> /command" + ChatColor.GRAY
+							+ " - Adds or removes a command from the ignore list, or returns the list.");
 				} else if (args[1].equalsIgnoreCase("set")) {
 					sender.sendMessage("/commandspy [c:{apuws|*}] [s:{apu|*}]");
 
@@ -218,6 +220,14 @@ public class commandspy extends JavaPlugin {
 					if (!hasPerm(sender, "ignore.remove"))
 						return true;
 					blacklistedcommands.remove(args[2]);
+				}else if (args[1].equalsIgnoreCase("list")) {
+					if (!hasPerm(sender, "ignore.list"))
+						return true;
+					sender.sendMessage("All blacklisted commands:");
+					for(String s:blacklistedcommands){
+						sender.sendMessage(s);
+					}
+					sender.sendMessage("");
 				}
 			} else {
 				return false;
