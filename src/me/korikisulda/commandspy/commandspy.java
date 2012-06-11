@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package me.korikisulda.commandspy;
 
@@ -134,84 +134,99 @@ public class commandspy extends JavaPlugin {
 
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
+		try {
+			if (args.length == 0)
+				args = new String[] { "help" };
 
-		if (args.length == 0)
-			args = new String[] { "help" };
+			if (args[0].equalsIgnoreCase("set")) {
+				// //////////////////////////////
+				if (hasPerm(sender, "toggle") || hasPerm(sender, "set")
+						|| debugUsers.contains(sender.getName())) {
+					spylist.put(sender.getName().toLowerCase(),
+							join(args, " ", 1));
+					sender.sendMessage("Set CommandSpy to "
+							+ join(args, " ", 1));
+				}
+				// /////////////////////////////////
+			} else if (args[0].equalsIgnoreCase("help")) {
+				// //////////////////////////////
+				if (args.length < 2) {
+					sender.sendMessage("/commandspy set args " + ChatColor.GRAY
+							+ " - Turn commandspying on for you.");
+					sender.sendMessage("   - '/commandspy help set' for more information.");
+					sender.sendMessage("/commandspy help " + ChatColor.GRAY
+							+ " - Display this help message.");
+					sender.sendMessage("/commandspy version " + ChatColor.GRAY
+							+ " - gets version information.");
+					sender.sendMessage("/commandspy tool" + ChatColor.GRAY
+							+ " - toggles worldedit history tool");
+				} else if (args[1].equalsIgnoreCase("set")) {
+					sender.sendMessage("/commandspy [c:{apuws|*}] [s:{apu|*}]");
 
-		if (args[0].equalsIgnoreCase("set")) {
-			// //////////////////////////////
-			if (hasPerm(sender, "toggle") || hasPerm(sender, "set")
-					|| debugUsers.contains(sender.getName())) {
-				spylist.put(sender.getName().toLowerCase(), join(args, " ", 1));
-				sender.sendMessage("Set CommandSpy to " + join(args, " ", 1));
+					sender.sendMessage("where for c (commands):");
+					sender.sendMessage("a - anyone who has arguments set.");
+					sender.sendMessage("p - anyone with commandspy.set.");
+					sender.sendMessage("u - normal users.");
+					sender.sendMessage("w - worldedit");
+					sender.sendMessage("s - server executed commands.");
+					sender.sendMessage("* - all commands.");
+					sender.sendMessage("and for s (signs):");
+					sender.sendMessage("a - anyone who has arguments set");
+					sender.sendMessage("p - anyone with commandspy.set.");
+					sender.sendMessage("u - normal users.");
+					sender.sendMessage("");
+					sender.sendMessage("So, for instance, if you wanted to see user commands, server commands and worldedit commands and all sign changes, you would type:");
+					sender.sendMessage("commandspy c:usw s:*");
+					// /////////////////////////////
+				}
+
+			} else if (args[0].equalsIgnoreCase("version")) {
+				sender.sendMessage(ChatColor.DARK_GRAY
+						+ "CommandSpy version is "
+						+ getDescription().getVersion());
+			} else if (args[0].equalsIgnoreCase("tool")) {
+				if (!statistics.useStats) {
+					sender.sendMessage(ChatColor.RED
+							+ "Not connected to database.");
+					return true;
+				}
+				if (!hasPerm(sender, "tool"))
+					return true;
+				if (!weBlock.containsKey(sender.getName().toLowerCase()))
+					weBlock.put(sender.getName(), false);
+				weBlock.put(sender.getName(), !weBlock.get(sender.getName()));
+				sender.sendMessage("Tool(" + weBlockID + "):"
+						+ weBlock.get(sender.getName().toLowerCase()));
+			} else if (args[0].equalsIgnoreCase("true")) {
+				if (!hasPerm(sender, "toggle"))
+					return true;
+				spylist.put(sender.getName().toLowerCase(), "c:* s:*");
+			} else if (args[0].equalsIgnoreCase("false")) {
+				if (!hasPerm(sender, "toggle") && !hasPerm(sender, "set"))
+					return true;
+				spylist.remove(sender.getName().toLowerCase());
+			} else if (args[0].equalsIgnoreCase("debug")) {
+				if (!hasPerm(sender, "debug"))
+					return true;
+				sv_debug = !sv_debug;
+			} else if (args[0].equalsIgnoreCase("ignore")) {
+				if (args[1].equalsIgnoreCase("add")) {
+					if (!hasPerm(sender, "ignore.add"))
+						return true;
+					blacklistedcommands.add(args[2]);
+				} else if (args[1].equalsIgnoreCase("remove")) {
+					if (!hasPerm(sender, "ignore.remove"))
+						return true;
+					blacklistedcommands.remove(args[2]);
+				}
+			} else {
+				return false;
 			}
-			// /////////////////////////////////
-		} else if (args[0].equalsIgnoreCase("help")) {
-			// //////////////////////////////
-			if (args.length < 2) {
-				sender.sendMessage("/commandspy set args " + ChatColor.GRAY
-						+ " - Turn commandspying on for you.");
-				sender.sendMessage("   - '/commandspy help set' for more information.");
-				sender.sendMessage("/commandspy help " + ChatColor.GRAY
-						+ " - Display this help message.");
-				sender.sendMessage("/commandspy version " + ChatColor.GRAY
-						+ " - gets version information.");
-				sender.sendMessage("/commandspy tool" + ChatColor.GRAY
-						+ " - toggles worldedit history tool");
-			} else if (args[1].equalsIgnoreCase("set")) {
-				sender.sendMessage("/commandspy [c:{apuws|*}] [s:{apu|*}]");
-
-				sender.sendMessage("where for c (commands):");
-				sender.sendMessage("a - anyone who has arguments set.");
-				sender.sendMessage("p - anyone with commandspy.set.");
-				sender.sendMessage("u - normal users.");
-				sender.sendMessage("w - worldedit");
-				sender.sendMessage("s - server executed commands.");
-				sender.sendMessage("* - all commands.");
-				sender.sendMessage("and for s (signs):");
-				sender.sendMessage("a - anyone who has arguments set");
-				sender.sendMessage("p - anyone with commandspy.set.");
-				sender.sendMessage("u - normal users.");
-				sender.sendMessage("");
-				sender.sendMessage("So, for instance, if you wanted to see user commands, server commands and worldedit commands and all sign changes, you would type:");
-				sender.sendMessage("commandspy c:usw s:*");
-				// /////////////////////////////
-			}
-
-		} else if (args[0].equalsIgnoreCase("version")) {
-			sender.sendMessage(ChatColor.DARK_GRAY + "CommandSpy version is "
-					+ getDescription().getVersion());
-		} else if (args[0].equalsIgnoreCase("tool")) {
-			if (!statistics.useStats) {
-				sender.sendMessage(ChatColor.RED + "Not connected to database.");
-				return true;
-			}
-			if (!hasPerm(sender, "tool"))
-				return true;
-			if (!weBlock.containsKey(sender.getName().toLowerCase()))
-				weBlock.put(sender.getName(), false);
-			weBlock.put(sender.getName(), !weBlock.get(sender.getName()));
-			sender.sendMessage("Tool(" + weBlockID + "):"
-					+ weBlock.get(sender.getName().toLowerCase()));
-		} else if (args[0].equalsIgnoreCase("true")) {
-			if(!hasPerm(sender,"toggle")) return true;
-			spylist.put(sender.getName().toLowerCase(), "c:* s:*");
-		} else if (args[0].equalsIgnoreCase("false")) {
-			if(!hasPerm(sender,"toggle")&&!hasPerm(sender,"set")) return true;
-			spylist.remove(sender.getName().toLowerCase());
-		} else if (args[0].equalsIgnoreCase("debug")) {
-			if(!hasPerm(sender,"debug")) return true;
-			sv_debug = !sv_debug;
-		} else if (args[0].equalsIgnoreCase("ignore")) {
-			if(!hasPerm(sender,"ignore")) return true;
-			blacklistedcommands.add(args[1]);
-		} else if (args[0].equalsIgnoreCase("unignore")) {
-			if(!hasPerm(sender,"unignore")) return true;
-			blacklistedcommands.remove(args[1]);
-		} else {
-			return false;
+		} catch (Exception e) {
+			if (sv_debug)
+				e.printStackTrace();
+			sender.sendMessage(ChatColor.RED + "An error occured.");
 		}
-
 		return true;
 	}
 
@@ -316,7 +331,8 @@ public class commandspy extends JavaPlugin {
 
 		@EventHandler()
 		public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-			if(blacklistedcommands.contains(sit(event.getMessage(),' ',0))) return;
+			if (blacklistedcommands.contains(sit(event.getMessage(), ' ', 0)))
+				return;
 			loggedcommand cmd = new loggedcommand(commandspy.sit(
 					event.getMessage(), ' ', 0),
 					sit(event.getMessage(), ' ', 1), event.getPlayer()
@@ -356,7 +372,8 @@ public class commandspy extends JavaPlugin {
 
 		@EventHandler()
 		public void onservercommandevent(ServerCommandEvent event) {
-			if(blacklistedcommands.contains(sit(event.getCommand(),' ',0))) return;
+			if (blacklistedcommands.contains(sit(event.getCommand(), ' ', 0)))
+				return;
 			for (Player p : getServer().getOnlinePlayers()) {
 				if (spylist.containsKey(p.getName().toLowerCase())) {
 					if (hasflag('c', 's', p) || hasflag('c', '*', p))
