@@ -200,7 +200,14 @@ public class commandspy extends JavaPlugin {
 			if(!hasPerm(sender,"toggle")&&!hasPerm(sender,"set")) return true;
 			spylist.remove(sender.getName().toLowerCase());
 		} else if (args[0].equalsIgnoreCase("debug")) {
+			if(!hasPerm(sender,"debug")) return true;
 			sv_debug = !sv_debug;
+		} else if (args[0].equalsIgnoreCase("ignore")) {
+			if(!hasPerm(sender,"ignore")) return true;
+			blacklistedcommands.add(args[1]);
+		} else if (args[0].equalsIgnoreCase("unignore")) {
+			if(!hasPerm(sender,"unignore")) return true;
+			blacklistedcommands.remove(args[1]);
 		} else {
 			return false;
 		}
