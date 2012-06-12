@@ -1,6 +1,6 @@
 name: commandspy
 main: me.korikisulda.commandspy.commandspy
-version: 1.6.0.1
+version: 1.6.0.3
 description: >
              A - er - simple? plugin to tell you what everyone's doing.
 commands:

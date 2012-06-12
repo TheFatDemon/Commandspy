@@ -77,8 +77,8 @@ public class commandspy extends JavaPlugin {
 
 	public void onDisable() {
 		getConfig().createSection("users", spylist);
-		saveConfig();
 		getConfig().set("dontlog", blacklistedcommands);
+		saveConfig();
 		if (getConfig().getBoolean("useMySQL"))
 			statistics.stopconnection();
 	}
