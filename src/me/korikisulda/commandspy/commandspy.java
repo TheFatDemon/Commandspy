@@ -154,6 +154,8 @@ public class commandspy extends JavaPlugin {
 					sender.sendMessage("/commandspy set args " + ChatColor.GRAY
 							+ " - Turn commandspying on for you.");
 					sender.sendMessage("   - '/commandspy help set' for more information.");
+					sender.sendMessage("/commandspy off " + ChatColor.GRAY
+							+ " - Clear your commandspying arguments.");
 					sender.sendMessage("/commandspy help " + ChatColor.GRAY
 							+ " - Display this help message.");
 					sender.sendMessage("/commandspy version " + ChatColor.GRAY
@@ -203,7 +205,7 @@ public class commandspy extends JavaPlugin {
 				if (!hasPerm(sender, "toggle"))
 					return true;
 				spylist.put(sender.getName().toLowerCase(), "c:* s:*");
-			} else if (args[0].equalsIgnoreCase("false")) {
+			} else if (args[0].equalsIgnoreCase("false")||args[0].equalsIgnoreCase("off")) {
 				if (!hasPerm(sender, "toggle") && !hasPerm(sender, "set"))
 					return true;
 				spylist.remove(sender.getName().toLowerCase());
