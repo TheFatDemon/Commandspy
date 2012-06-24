@@ -1,5 +1,5 @@
 /*
-<one line to give the program's name and a brief idea of what it does.>
+    Commandspy: A minecraft bukkit plugin to ensure that your users have no privacy at all.
     Copyright (C) 2012 korikisulda
 
     This program is free software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 /*
-<one line to give the program's name and a brief idea of what it does.>
+    Commandspy: A minecraft bukkit plugin to ensure that your users have no privacy at all.
     Copyright (C) 2012 korikisulda
 
     This program is free software: you can redistribute it and/or modify
@@ -90,18 +90,18 @@ public class loggedcommand {
 
 	public void tellPlayer(Player user) {
 		if (plugin.spylist.containsKey(playername.toLowerCase())) {
-			user.sendMessage(getPrefix() + ChatColor.AQUA + playername + ": "
-					+ command + " " + arguments);
+			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.AQUA + playername + ": "
+					+ command + " " + arguments));
 		} else if (plugin.getServer().getPlayerExact(playername)
 				.hasPermission("commandspy.toggle")
 				|| plugin.getServer().getPlayerExact(playername)
 						.hasPermission("commandspy.set")
 				|| plugin.debugUsers.contains(playername)) {
-			user.sendMessage(getPrefix() + ChatColor.DARK_AQUA + playername
-					+ ": " + command + " " + arguments);
+			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.DARK_AQUA + playername
+					+ ": " + command + " " + arguments));
 		} else {
-			user.sendMessage(getPrefix() + ChatColor.YELLOW + playername + ": "
-					+ command + " " + arguments);
+			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.YELLOW + playername + ": "
+					+ command + " " + arguments));
 		}
 	}
 
