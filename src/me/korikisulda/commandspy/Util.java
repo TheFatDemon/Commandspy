@@ -16,7 +16,7 @@ public class Util {
 	}
 	
 	public void SendUserMessage(Player user,String message){
-		if(!plugin.modes.containsKey(user.getName()))user.sendMessage(message);
+		if(!plugin.modes.containsKey(user.getName())){user.sendMessage(message); return;}
 		if(plugin.modes.get(user.getName())==1) user.sendPluginMessage(plugin, "SimpleNotice", message.getBytes());
 	}
 	
