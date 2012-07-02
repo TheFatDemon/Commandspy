@@ -7,4 +7,4 @@ commands:
     commandspy:
       description: Access commandspy subcommands
       usage: /commandspy help
-depend: [WorldEdit]
+softdepend: [WorldEdit]

@@ -15,6 +15,8 @@ public void help(CommandSender sender,String[] args){
 		sender.sendMessage("/commandspy set args " + ChatColor.GRAY
 				+ " - Turn commandspying on for you.");
 		sender.sendMessage("   - '/commandspy help set' for more information.");
+		sender.sendMessage("/commandspy on " + ChatColor.GRAY
+				+ " - Turn commandspying on (c:*).");
 		sender.sendMessage("/commandspy off " + ChatColor.GRAY
 				+ " - Clear your commandspying arguments.");
 		sender.sendMessage("/commandspy help " + ChatColor.GRAY
