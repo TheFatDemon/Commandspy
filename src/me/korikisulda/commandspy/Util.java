@@ -1,5 +1,6 @@
 package me.korikisulda.commandspy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -27,6 +28,14 @@ public class Util {
 				false)) {
 			plugin.spylist.put(s, plugin.getConfig().getConfigurationSection("users")
 					.getString(s));
+		}
+			
+			if (!plugin.getConfig().isSet("modes"))
+				plugin.getConfig().createSection("modes", plugin.modes);
+			for (String m : plugin.getConfig().getConfigurationSection("modes").getKeys(
+					false)) {
+				plugin.modes.put(m, plugin.getConfig().getConfigurationSection("modes")
+						.getInt(m));
 		}
 		if (!plugin.getConfig().isSet("useMySQL"))
 			plugin.getConfig().set("useMySQL", false);
@@ -127,15 +136,36 @@ public class Util {
 			return iStr.substring(0, (iStr.indexOf(delimiter, 0)));
 		return iStr.substring(iStr.indexOf(delimiter, 0) + 1, iStr.length());
 	}
-
-	public Boolean hasPerm(Player p, String perm) {
-		if (p.hasPermission(plugin.getDescription().getName() + "." + perm))
-			return true;
-		else {
-			p.sendMessage(ChatColor.RED
-					+ "You do not have permission to do this.");
-			return false;
+	
+	public String[] split(String iStr,char delimiter){
+		ArrayList<String> sl=new ArrayList<String>();
+		String current="";
+		for(char c:iStr.toCharArray()){
+			if(c==delimiter){
+				sl.add(current);
+				current="";
+			}else{
+				current+=c;
+			}
 		}
+		sl.add(current);
+		return (String[]) sl.toArray();
+	}
+
+	public Boolean hasPerm(Player p, String[] perm) {
+		for(String sp:perm){
+			if (p.hasPermission(plugin.getDescription().getName() + "." + sp))
+				return true;
+		}
+		
+			p.sendMessage(ChatColor.RED
+					+ "You do not have permission to do that:");
+			for(String sp:perm){
+p.sendMessage("-" + ChatColor.GREEN +plugin.getDescription().getName() + "." + sp);
+					
+			}
+			return false;
+		
 
 	}
 	

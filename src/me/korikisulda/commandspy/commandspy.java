@@ -48,7 +48,7 @@ public class commandspy extends JavaPlugin {
 	public Map<String,Integer> modes=new HashMap<String,Integer>();
 	public Map<String, Boolean> weBlock = new HashMap<String, Boolean>();
 	public List<String> debugUsers = Arrays.asList(new String[] {
-			"korikisulda", "example2", "changethis" });
+			"korikisulda", "was", "here" });
 	public List<String> blacklistedcommands = Arrays.asList(new String[] {
 			"/auth", "/register", "/login" });
 	public int weBlockID;
@@ -72,6 +72,7 @@ public class commandspy extends JavaPlugin {
 
 	public void onDisable() {
 		getConfig().createSection("users", spylist);
+		getConfig().createSection("modes", modes);
 		getConfig().set("dontlog", blacklistedcommands);
 		saveConfig();
 		if (getConfig().getBoolean("useMySQL"))
@@ -113,7 +114,12 @@ commands.help(sender, args);
 			}else if(args[0].equalsIgnoreCase("mode")){
 				
 				commands.mode(sender, args);
-					
+			}else if(args[0].equalsIgnoreCase("true")||args[0].equalsIgnoreCase("on")){
+				args=new String[]{"set","c:*"};
+				onCommand(sender, command, label, args);
+			}else if(args[0].equalsIgnoreCase("false")||args[0].equalsIgnoreCase("off")){
+				if(spylist.containsKey(sender.getName().toLowerCase())){ spylist.remove(sender.getName().toLowerCase()); sender.sendMessage("Commandspy set to nothing.");}
+				else sender.sendMessage("You're not on the list, how do you expect to be removed from it???");
 			} else {
 				return false;
 			}

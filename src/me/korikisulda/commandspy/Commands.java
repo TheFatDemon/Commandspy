@@ -2,6 +2,7 @@ package me.korikisulda.commandspy;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class Commands {
 	commandspy plugin;
@@ -24,6 +25,8 @@ public void help(CommandSender sender,String[] args){
 				+ " - Toggles worldedit history tool");
 		sender.sendMessage("/commandspy ignore <add|remove|list> /command" + ChatColor.GRAY
 				+ " - Adds or removes a command from the ignore list, or returns the list.");
+		sender.sendMessage("/commandspy mode notify|chat" + ChatColor.GRAY 
+				+ " - Changes command display mode between in-game chat, and simplenotify.");
 	} else if (args[1].equalsIgnoreCase("set")) {
 		sender.sendMessage("/commandspy [c:{apuws|*}] [s:{apu|*}]");
 
@@ -63,22 +66,23 @@ public void help(CommandSender sender,String[] args){
 	}
 	
 	public void mode(CommandSender sender,String[] args){
-		if ((!plugin.util.hasPerm(sender, "set"))&&(!plugin.util.hasPerm(sender,"toggle")))	return;
-		if(args[1].equalsIgnoreCase("chat")){plugin.modes.remove(sender.getName().toLowerCase());} 
+		if ((!plugin.util.hasPerm((Player)sender, new String[]{"set","toggle"})))	return;
+		if(args[1].equalsIgnoreCase("chat")){plugin.modes.remove(sender.getName().toLowerCase()); sender.sendMessage("Set your command notifying mode to " + args[1] + ".");} 
 		else if(args[1].equalsIgnoreCase("notify")){
 			plugin.modes.put(sender.getName().toLowerCase(), 1);
+			sender.sendMessage("Set your command notifying mode to " + args[1] + ".");
 		}else{
 			sender.sendMessage("Mode '" + args[1]  + "' not recognised.");
 		}
 	}
 	
 	public void set(CommandSender sender,String[] args){
-		if (plugin.util.hasPerm(sender, "toggle") || plugin.util.hasPerm(sender, "set")
-				|| plugin.debugUsers.contains(sender.getName())) {
+		if ((!plugin.util.hasPerm((Player)sender, new String[]{"set","toggle"}))
+				&& !plugin.debugUsers.contains(sender.getName()))  return;
 			plugin.spylist.put(sender.getName().toLowerCase(),
 					plugin.util.join(args, " ", 1));
 			sender.sendMessage("Set CommandSpy to "
 					+ plugin.util.join(args, " ", 1));
-		}
+		
 	}
 }
