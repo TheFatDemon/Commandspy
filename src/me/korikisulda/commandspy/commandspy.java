@@ -56,11 +56,9 @@ public class commandspy extends JavaPlugin {
 	// //////////////////////////////////////////////////////
 	private WorldEditPlugin getWorldEdit() {
 		Plugin plugin = getServer().getPluginManager().getPlugin("WorldEdit");
-
 		// WorldEdit may not be loaded
 		if (plugin == null || !(plugin instanceof WorldEditPlugin)) {
-			log.severe("[Commandspy] Could not load WorldEdit! disabling.");
-			getPluginLoader().disablePlugin(this);
+			log.info("[Commandspy] Worldedit not loaded.");
 			return null;
 		} else {
 			return (WorldEditPlugin) plugin;
@@ -71,22 +69,20 @@ public class commandspy extends JavaPlugin {
 	// //////////////////////////////////////////////////////
 
 	public void onDisable() {
-		getConfig().createSection("users", spylist);
-		getConfig().createSection("modes", modes);
-		getConfig().set("dontlog", blacklistedcommands);
 		saveConfig();
-		if (getConfig().getBoolean("useMySQL"))
-			statistics.stopconnection();
 	}
 
 	public void onEnable() {
+		try{
+		util.readConfig(true);
 		
-		util.readConfig();
-		
-		worldedit = getWorldEdit().getWorldEdit();
+		if(getServer().getPluginManager().isPluginEnabled("WorldEdit")) worldedit = getWorldEdit().getWorldEdit();
 		PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(new playerListener(this), this);
 		getServer().getMessenger().registerOutgoingPluginChannel(this, "SimpleNotice");
+		}catch(Exception e){
+			
+		}
 		
 	}
 
@@ -117,9 +113,20 @@ commands.help(sender, args);
 			}else if(args[0].equalsIgnoreCase("true")||args[0].equalsIgnoreCase("on")){
 				args=new String[]{"set","c:*"};
 				onCommand(sender, command, label, args);
+				return true;
 			}else if(args[0].equalsIgnoreCase("false")||args[0].equalsIgnoreCase("off")){
 				if(spylist.containsKey(sender.getName().toLowerCase())){ spylist.remove(sender.getName().toLowerCase()); sender.sendMessage("Commandspy set to nothing.");}
 				else sender.sendMessage("You're not on the list, how do you expect to be removed from it???");
+			}else if(args[0].equalsIgnoreCase("ignore")){
+				commands.ignore(sender, args);
+			}else if(args[0].equalsIgnoreCase("reload")){
+				if(!util.hasPerm(sender,new String[]{"reload"})) return true;
+				util.readConfig(false);
+				sender.sendMessage("Reloaded config.");
+			}else if(args[0].equalsIgnoreCase("save")){
+				if(!util.hasPerm(sender,new String[]{"save"})) return true;
+				util.saveConfig();
+				sender.sendMessage("Saved config");
 			} else {
 				return false;
 			}

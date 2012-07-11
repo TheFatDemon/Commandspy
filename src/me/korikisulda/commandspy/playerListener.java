@@ -8,8 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 
-import com.sk89q.worldedit.regions.Region;
-
 public class playerListener implements Listener {
 	private commandspy plugin;
 
@@ -26,7 +24,7 @@ public class playerListener implements Listener {
 				plugin.util.sit(event.getMessage(), ' ', 1), event.getPlayer()
 						.getName(), "unimplemented", event.getPlayer()
 						.getWorld().getName(), false,
-				getPlayerRegion(event.getPlayer()), event.getPlayer()
+				plugin.util.getPlayerRegion(event.getPlayer()), event.getPlayer()
 						.getLocation(), plugin);
 		plugin.statistics.addcommand(cmd);
 		for (Player p : plugin.getServer().getOnlinePlayers()) {
@@ -134,16 +132,7 @@ public class playerListener implements Listener {
 
 	}
 
-	public Region getPlayerRegion(Player p) {
-		try {
-			return plugin.worldedit.getSession(p.getName()).getSelection(
-					plugin.worldedit.getSession(p.getName())
-							.getSelectionWorld());
-		} catch (Exception e) {
-			// e.printStackTrace();
-			return null;
-		}
-	}
+	
 
 	// ////////////////////////////
 

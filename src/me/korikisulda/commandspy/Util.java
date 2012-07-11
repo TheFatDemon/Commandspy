@@ -9,6 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.sk89q.worldedit.regions.Region;
+
 public class Util {
 	commandspy plugin;
 
@@ -21,7 +23,8 @@ public class Util {
 		if(plugin.modes.get(user.getName())==1) user.sendPluginMessage(plugin, "SimpleNotice", message.getBytes());
 	}
 	
-	public void readConfig(){
+	public void readConfig(boolean save){
+		plugin.reloadConfig();
 		if (!plugin.getConfig().isSet("users"))
 			plugin.getConfig().createSection("users", plugin.spylist);
 		for (String s : plugin.getConfig().getConfigurationSection("users").getKeys(
@@ -49,6 +52,8 @@ public class Util {
 			plugin.getConfig().set("SQLdatabase", "");
 		if (!plugin.getConfig().isSet("SQLport"))
 			plugin.getConfig().set("SQLport", 3306);
+		if (!plugin.getConfig().isSet("IgnoreSelf"))
+			plugin.getConfig().set("IgnoreSelf", false);
 		if (!plugin.getConfig().isSet("dontlog"))
 			plugin.getConfig().set("dontlog", plugin.blacklistedcommands);
 		plugin.blacklistedcommands = plugin.getConfig().getStringList("dontlog");
@@ -58,7 +63,7 @@ public class Util {
 		plugin.debugUsers = plugin.getConfig().getStringList("debugUsers");
 		if (!plugin.getConfig().isSet("weBlockID"))
 			plugin.getConfig().set("weBlockID", 46);
-		plugin.saveConfig();
+		if(save)plugin.saveConfig();
 		plugin.weBlockID = plugin.getConfig().getInt("weBlockID");
 		// ///////////////////////////////////////////////////////
 		if (plugin.getConfig().isSet("SQLhostname")
@@ -72,6 +77,15 @@ public class Util {
 							.getString("SQLpassword"),
 							plugin.getConfig().getString("SQLdatabase"));
 		}
+	}
+	
+	public void saveConfig(){
+		plugin.getConfig().createSection("users", plugin.spylist);
+		plugin.getConfig().createSection("modes", plugin.modes);
+		plugin.getConfig().set("dontlog", plugin.blacklistedcommands);
+		saveConfig();
+		if (plugin.getConfig().getBoolean("useMySQL"))
+			plugin.statistics.stopconnection();
 	}
 	
 	public boolean hasflag(char section, char flag, String player) {
@@ -152,7 +166,24 @@ public class Util {
 		return (String[]) sl.toArray();
 	}
 
-	public Boolean hasPerm(Player p, String[] perm) {
+	public Boolean hasPerm(Player sender, String[] string) {
+		for(String sp:string){
+			if (sender.hasPermission(plugin.getDescription().getName() + "." + sp))
+				return true;
+		}
+		
+			sender.sendMessage(ChatColor.RED
+					+ "You do not have permission to do that:");
+			for(String sp:string){
+sender.sendMessage("-" + ChatColor.GREEN +plugin.getDescription().getName() + "." + sp);
+					
+			}
+			return false;
+		
+
+	}
+	
+	public Boolean hasPerm(CommandSender p,String[] perm){
 		for(String sp:perm){
 			if (p.hasPermission(plugin.getDescription().getName() + "." + sp))
 				return true;
@@ -167,16 +198,19 @@ p.sendMessage("-" + ChatColor.GREEN +plugin.getDescription().getName() + "." + s
 			return false;
 		
 
-	}
+		}
 	
-	public Boolean hasPerm(CommandSender p,String perm){
-		if (p.hasPermission(plugin.getDescription().getName() + "." + perm))
-			return true;
-		else {
-			p.sendMessage(ChatColor.RED
-					+ "You do not have permission to do this.");
-			return false;
+	public Region getPlayerRegion(Player p) {
+		if(!plugin.getServer().getPluginManager().isPluginEnabled("WorldEdit")) return null;
+		try {
+			return plugin.worldedit.getSession(p.getName()).getSelection(
+					plugin.worldedit.getSession(p.getName())
+							.getSelectionWorld());
+		} catch (Exception e) {
+			// e.printStackTrace();
+			return null;
 		}
 	}
+	
 	
 }

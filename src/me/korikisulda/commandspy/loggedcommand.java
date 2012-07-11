@@ -89,6 +89,8 @@ public class loggedcommand {
 	}
 
 	public void tellPlayer(Player user) {
+		plugin.log.info(String.valueOf(plugin.getConfig().getBoolean("IgnoreSelf")));
+		if(playername.equalsIgnoreCase(user.getName())&&plugin.getConfig().getBoolean("IgnoreSelf")) return;
 		if (plugin.spylist.containsKey(playername.toLowerCase())) {
 			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.AQUA + playername + ": "
 					+ command + " " + arguments));
