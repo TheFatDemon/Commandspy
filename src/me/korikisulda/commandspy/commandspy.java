@@ -143,6 +143,10 @@ commands.help(sender, args);
 	public boolean hasflag(char section, char flag, Player player) {
 		return util.hasflag(section, flag, player.getName().toLowerCase());
 	}
+	
+	public boolean hasflag(char section, char flag, String player) {
+		return util.hasflag(section, flag, player.toLowerCase());
+	}
 
 
 

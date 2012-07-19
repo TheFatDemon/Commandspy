@@ -54,6 +54,31 @@ public class playerListener implements Listener {
 				// ///////////////////////////////////////
 			}
 		}
+		if (plugin.spylist.containsKey("console")) {
+			// ///////////////////////////////////////
+			if (plugin.spylist.containsKey(event.getPlayer().getName()
+					.toLowerCase())) {
+				if (plugin.hasflag('c', 'a', "console")
+						|| plugin.hasflag('c', '*', "console")
+						|| (event.getMessage().startsWith("//") && plugin.hasflag(
+								'c', 'w', "console")))
+					cmd.tellServer();
+			} else if (event.getPlayer().hasPermission(
+					"commandspy.toggle")) {
+				if (plugin.hasflag('c', 'p', "console")
+						|| plugin.hasflag('c', '*', "console")
+						|| (event.getMessage().startsWith("//") && plugin.hasflag(
+								'c', 'w', "console")))
+					cmd.tellServer();
+			} else {
+				if (plugin.hasflag('c', 'u', "console")
+						|| plugin.hasflag('c', '*',"console")
+						|| (event.getMessage().startsWith("//") && plugin.hasflag(
+								'c', 'w', "console")))
+					cmd.tellServer();
+			}
+			// ///////////////////////////////////////
+		}
 	}
 
 	@EventHandler()
@@ -93,6 +118,27 @@ public class playerListener implements Listener {
 								+ event.getPlayer().getName() + ": "
 								+ plugin.util.join(event.getLines(), "|", 0));
 				}
+			}
+		}
+		
+		if (plugin.spylist.containsKey("console")) {
+			if (plugin.spylist.containsKey(event.getPlayer().getName()
+					.toLowerCase())) {
+				if (plugin.hasflag('s', 'a', "console") || plugin.hasflag('s', '*', "console"))
+					plugin.log.info("[Sign]" 
+							+ event.getPlayer().getName() + ": "
+							+ plugin.util.join(event.getLines(), "|", 0));
+			} else if (event.getPlayer().hasPermission(
+					"commandspy.toggle")) {
+				if (plugin.hasflag('s', 'p', "console") || plugin.hasflag('s', '*', "console"))
+					plugin.log.info("[Sign]"
+							+ event.getPlayer().getName() + ": "
+							+ plugin.util.join(event.getLines(), "|", 0));
+			} else {
+				if (plugin.hasflag('s', 'u', "console") || plugin.hasflag('s', '*', "console"))
+					plugin.log.info("[Sign]" 
+							+ event.getPlayer().getName() + ": "
+							+ plugin.util.join(event.getLines(), "|", 0));
 			}
 		}
 	}

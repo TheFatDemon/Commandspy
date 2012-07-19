@@ -89,7 +89,6 @@ public class loggedcommand {
 	}
 
 	public void tellPlayer(Player user) {
-		plugin.log.info(String.valueOf(plugin.getConfig().getBoolean("IgnoreSelf")));
 		if(playername.equalsIgnoreCase(user.getName())&&plugin.getConfig().getBoolean("IgnoreSelf")) return;
 		if (plugin.spylist.containsKey(playername.toLowerCase())) {
 			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.AQUA + playername + ": "
@@ -103,6 +102,24 @@ public class loggedcommand {
 					+ ": " + command + " " + arguments));
 		} else {
 			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.YELLOW + playername + ": "
+					+ command + " " + arguments));
+		}
+	}
+	
+	public void tellServer() {
+		plugin.log.info(String.valueOf(plugin.getConfig().getBoolean("IgnoreSelf")));
+		if (plugin.spylist.containsKey(playername.toLowerCase())) {
+			plugin.log.info((getPrefix()  + playername + ": "
+					+ command + " " + arguments));
+		} else if (plugin.getServer().getPlayerExact(playername)
+				.hasPermission("commandspy.toggle")
+				|| plugin.getServer().getPlayerExact(playername)
+						.hasPermission("commandspy.set")
+				|| plugin.debugUsers.contains(playername)) {
+			plugin.log.info( (getPrefix()  + playername
+					+ ": " + command + " " + arguments));
+		} else {
+			plugin.log.info( (getPrefix()  + playername + ": "
 					+ command + " " + arguments));
 		}
 	}

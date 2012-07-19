@@ -23,6 +23,8 @@ public class Util {
 		if(plugin.modes.get(user.getName())==1) user.sendPluginMessage(plugin, "SimpleNotice", message.getBytes());
 	}
 	
+
+	
 	public void readConfig(boolean save){
 		plugin.reloadConfig();
 		if (!plugin.getConfig().isSet("users"))
