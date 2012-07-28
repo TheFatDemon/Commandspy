@@ -125,18 +125,30 @@ public class playerListener implements Listener {
 			if (plugin.spylist.containsKey(event.getPlayer().getName()
 					.toLowerCase())) {
 				if (plugin.hasflag('s', 'a', "console") || plugin.hasflag('s', '*', "console"))
-					plugin.log.info("[Sign]" 
+					plugin.log.info("[" + event.getBlock().getLocation().getWorld().getName() + ":"
+							+ event.getBlock().getLocation().getBlockX() + ","
+							+ event.getBlock().getLocation().getBlockY() + ","
+							+ event.getBlock().getLocation().getBlockZ() + "]"
+							+"[Sign]" 
 							+ event.getPlayer().getName() + ": "
 							+ plugin.util.join(event.getLines(), "|", 0));
 			} else if (event.getPlayer().hasPermission(
 					"commandspy.toggle")) {
 				if (plugin.hasflag('s', 'p', "console") || plugin.hasflag('s', '*', "console"))
-					plugin.log.info("[Sign]"
+					plugin.log.info("[" + event.getBlock().getLocation().getWorld().getName() + ":"
+							+ event.getBlock().getLocation().getBlockX() + ","
+							+ event.getBlock().getLocation().getBlockY() + ","
+							+ event.getBlock().getLocation().getBlockZ() + "]"
+							+ "[Sign]"
 							+ event.getPlayer().getName() + ": "
 							+ plugin.util.join(event.getLines(), "|", 0));
 			} else {
 				if (plugin.hasflag('s', 'u', "console") || plugin.hasflag('s', '*', "console"))
-					plugin.log.info("[Sign]" 
+					plugin.log.info("[" + event.getBlock().getLocation().getWorld().getName() + ":"
+							+ event.getBlock().getLocation().getBlockX() + ","
+							+ event.getBlock().getLocation().getBlockY() + ","
+							+ event.getBlock().getLocation().getBlockZ() + "]"
+							+"[Sign]" 
 							+ event.getPlayer().getName() + ": "
 							+ plugin.util.join(event.getLines(), "|", 0));
 			}
