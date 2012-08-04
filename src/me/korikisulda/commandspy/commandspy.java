@@ -18,6 +18,7 @@
 
 package me.korikisulda.commandspy;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,12 @@ public class commandspy extends JavaPlugin {
 	}
 
 	public void onEnable() {
+		try {
+		    Metrics metrics = new Metrics(this);
+		    metrics.start();
+		} catch (IOException e) {
+		    // Failed to submit the stats, so - er - do nothing.
+		}
 		try{
 		util.readConfig(true);
 		
