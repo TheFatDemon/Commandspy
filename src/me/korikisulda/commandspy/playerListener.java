@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 
 public class playerListener implements Listener {
@@ -188,6 +189,13 @@ public class playerListener implements Listener {
 
 	public void search(Location l) {
 
+	}
+	
+	@EventHandler()
+	public void onPlayerJoin(PlayerJoinEvent event){
+		if(event.getPlayer().hasPermission("commandspy.updatenotify")){
+			plugin.notifyOnUpdate(event.getPlayer());
+		}
 	}
 
 	

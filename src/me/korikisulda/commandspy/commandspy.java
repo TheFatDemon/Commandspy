@@ -19,11 +19,19 @@
 package me.korikisulda.commandspy;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -74,6 +82,7 @@ public class commandspy extends JavaPlugin {
 	}
 
 	public void onEnable() {
+		notifyOnUpdate();
 		try {
 		    Metrics metrics = new Metrics(this);
 		    metrics.start();
@@ -156,6 +165,46 @@ commands.help(sender, args);
 	}
 
 
+public void notifyOnUpdate(){
+	try{
+		URL filesFeed=new URL("http://dev.bukkit.org/server-mods/commandspy/files.rss");
+		InputStream input = filesFeed.openConnection().getInputStream();
+		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(input);
 
+		Node latestFile = document.getElementsByTagName("item").item(0);
+		NodeList children = latestFile.getChildNodes();
+
+		String version = children.item(1).getTextContent().replaceAll("[a-zA-Z ]","");
+		String link = children.item(3).getTextContent();
+if(!getDescription().getVersion().equals(version)){
+	log.info("[Commandspy] This version of commandspy is outdated! latest version is " + version + " at: ");
+	log.info(link);
+	
+}
+		}catch(Exception e){
+		e.printStackTrace();
+		}
+}
+
+public void notifyOnUpdate(Player p){
+	try{
+		URL filesFeed=new URL("http://dev.bukkit.org/server-mods/commandspy/files.rss");
+		InputStream input = filesFeed.openConnection().getInputStream();
+		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(input);
+
+		Node latestFile = document.getElementsByTagName("item").item(0);
+		NodeList children = latestFile.getChildNodes();
+
+		String version = children.item(1).getTextContent().replaceAll("[a-zA-Z ]","");
+		String link = children.item(3).getTextContent();
+if(!getDescription().getVersion().equals(version)){
+	p.sendMessage(ChatColor.GRAY + "This version of commandspy is outdated! latest version is " + ChatColor.YELLOW + version + ChatColor.GRAY + " at: ");
+	p.sendMessage(ChatColor.AQUA + link);
+	
+}
+		}catch(Exception e){
+		e.printStackTrace();
+		}
+}
 	
 }
