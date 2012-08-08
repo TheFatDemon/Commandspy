@@ -85,7 +85,7 @@ public class Util {
 		plugin.getConfig().createSection("users", plugin.spylist);
 		plugin.getConfig().createSection("modes", plugin.modes);
 		plugin.getConfig().set("dontlog", plugin.blacklistedcommands);
-		saveConfig();
+		plugin.saveConfig();
 		if (plugin.getConfig().getBoolean("useMySQL"))
 			plugin.statistics.stopconnection();
 	}
