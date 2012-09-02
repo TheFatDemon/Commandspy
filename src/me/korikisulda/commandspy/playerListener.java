@@ -121,18 +121,18 @@ public class playerListener implements Listener {
 				if (plugin.spylist.containsKey(event.getPlayer().getName()
 						.toLowerCase())) {
 					if (plugin.hasflag('s', 'a', p) || plugin.hasflag('s', '*', p))
-						p.sendMessage("[Sign]" + ChatColor.AQUA
+						p.sendMessage("[Sign]" + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("signAdminPrefix"))
 								+ event.getPlayer().getName() + ": "
 								+ plugin.util.join(event.getLines(), "|", 0));
 				} else if (event.getPlayer().hasPermission(
 						"commandspy.toggle")) {
 					if (plugin.hasflag('s', 'p', p) || plugin.hasflag('s', '*', p))
-						p.sendMessage("[Sign]" + ChatColor.DARK_AQUA
+						p.sendMessage("[Sign]" + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("signPermissionPrefix"))
 								+ event.getPlayer().getName() + ": "
 								+ plugin.util.join(event.getLines(), "|", 0));
 				} else {
 					if (plugin.hasflag('s', 'u', p) || plugin.hasflag('s', '*', p))
-						p.sendMessage("[Sign]" + ChatColor.YELLOW
+						p.sendMessage("[Sign]" + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("signUserPrefix"))
 								+ event.getPlayer().getName() + ": "
 								+ plugin.util.join(event.getLines(), "|", 0));
 				}

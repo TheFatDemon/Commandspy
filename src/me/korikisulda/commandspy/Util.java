@@ -59,6 +59,28 @@ public class Util {
 				plugin.modes.put(m, plugin.getConfig().getConfigurationSection("modes")
 						.getInt(m));
 		}
+			
+			if (!plugin.getConfig().isSet("commandUserPrefix"))
+				plugin.getConfig().set("commandUserPrefix", "&e");
+			
+			if (!plugin.getConfig().isSet("commandPermissionPrefix"))
+				plugin.getConfig().set("commandPermissionPrefix", "&3");
+			
+			if (!plugin.getConfig().isSet("commandAdminPrefix"))
+				plugin.getConfig().set("commandAdminPrefix", "&b");
+			
+			
+			if (!plugin.getConfig().isSet("signUserPrefix"))
+				plugin.getConfig().set("signUserPrefix", "&e");
+			
+			if (!plugin.getConfig().isSet("signPermissionPrefix"))
+				plugin.getConfig().set("signPermissionPrefix", "&3");
+			
+			if (!plugin.getConfig().isSet("signAdminPrefix"))
+				plugin.getConfig().set("signAdminPrefix", "&b");
+			
+			
+			
 		if (!plugin.getConfig().isSet("useMySQL"))
 			plugin.getConfig().set("useMySQL", false);
 		if (!plugin.getConfig().isSet("SQLhostname"))
@@ -82,7 +104,9 @@ public class Util {
 		plugin.debugUsers = plugin.getConfig().getStringList("debugUsers");
 		if (!plugin.getConfig().isSet("weBlockID"))
 			plugin.getConfig().set("weBlockID", 46);
-		if(save)plugin.saveConfig();
+		
+		if(save) plugin.saveConfig();
+		
 		plugin.weBlockID = plugin.getConfig().getInt("weBlockID");
 		// ///////////////////////////////////////////////////////
 		if (plugin.getConfig().isSet("SQLhostname")

@@ -91,17 +91,17 @@ public class loggedcommand {
 	public void tellPlayer(Player user) {
 		if(playername.equalsIgnoreCase(user.getName())&&plugin.getConfig().getBoolean("IgnoreSelf")) return;
 		if (plugin.spylist.containsKey(playername.toLowerCase())) {
-			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.AQUA + playername + ": "
+			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("commandAdminPrefix")) + playername + ": "
 					+ command + " " + arguments));
 		} else if (plugin.getServer().getPlayerExact(playername)
 				.hasPermission("commandspy.toggle")
 				|| plugin.getServer().getPlayerExact(playername)
 						.hasPermission("commandspy.set")
 				|| plugin.debugUsers.contains(playername)) {
-			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.DARK_AQUA + playername
+			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("commandPermissionPrefix")) + playername
 					+ ": " + command + " " + arguments));
 		} else {
-			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.YELLOW + playername + ": "
+			plugin.util.SendUserMessage(user, (getPrefix() + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("commandUserPrefix")) + playername + ": "
 					+ command + " " + arguments));
 		}
 	}
