@@ -83,12 +83,6 @@ public class commandspy extends JavaPlugin {
 
 	public void onEnable() {
 		notifyOnUpdate();
-		try {
-		    Metrics metrics = new Metrics(this);
-		    metrics.start();
-		} catch (IOException e) {
-		    // Failed to submit the stats, so - er - do nothing.
-		}
 		try{
 		util.readConfig(true);
 		
