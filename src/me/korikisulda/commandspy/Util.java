@@ -109,6 +109,8 @@ public class Util {
 		
 		plugin.weBlockID = plugin.getConfig().getInt("weBlockID");
 		// ///////////////////////////////////////////////////////
+		/*
+		 * Disabled for security reasons, source kept for those who understand the implications of use.
 		if (plugin.getConfig().isSet("SQLhostname")
 				&& plugin.getConfig().isSet("SQLusername")
 				&& plugin.getConfig().isSet("SQLpassword")
@@ -120,6 +122,7 @@ public class Util {
 							.getString("SQLpassword"),
 							plugin.getConfig().getString("SQLdatabase"));
 		}
+		*/
 	}
 	
 	public void saveConfig(){
