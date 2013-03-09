@@ -8,4 +8,5 @@ commands:
     commandspy:
       description: Access commandspy subcommands
       usage: /commandspy help
+      aliases: [c, cs]
 softdepend: [WorldEdit]
