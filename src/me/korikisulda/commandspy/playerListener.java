@@ -33,7 +33,7 @@ public class playerListener implements Listener {
 		plugin = Cspy;
 	}
 
-	@EventHandler()
+	@EventHandler
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		if (plugin.blacklistedcommands.contains(plugin.util.sit(event.getMessage(), ' ', 0)))
 			return;
@@ -99,7 +99,7 @@ public class playerListener implements Listener {
 		}
 	}
 
-	@EventHandler()
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onservercommandevent(ServerCommandEvent event) {
 		if (plugin.blacklistedcommands.contains(plugin.util.sit(event.getCommand(), ' ', 0)))
 			return;
@@ -112,7 +112,7 @@ public class playerListener implements Listener {
 		}
 	}
 
-	@EventHandler()
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onsignwritten(org.bukkit.event.block.SignChangeEvent event) {
 		if (plugin.util.join(event.getLines(), "|", 0).length() < 4)
 			return;
@@ -208,7 +208,7 @@ public class playerListener implements Listener {
 
 	}
 	
-	@EventHandler()
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent event){
 		if(event.getPlayer().hasPermission("commandspy.updatenotify")){
 			plugin.notifyOnUpdate(event.getPlayer());
