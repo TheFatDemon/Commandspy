@@ -33,7 +33,7 @@ public class playerListener implements Listener {
 		plugin = Cspy;
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		if (plugin.blacklistedcommands.contains(plugin.util.sit(event.getMessage(), ' ', 0)))
 			return;
