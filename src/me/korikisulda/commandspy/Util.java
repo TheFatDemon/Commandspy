@@ -52,6 +52,9 @@ public class Util {
 					.getString(s));
 		}
 			
+			if(!plugin.getConfig().isSet("notifyOnUpdate")) plugin.getConfig().set("notifyOnUpdate", true);
+		
+		
 			if (!plugin.getConfig().isSet("modes"))
 				plugin.getConfig().createSection("modes", plugin.modes);
 			for (String m : plugin.getConfig().getConfigurationSection("modes").getKeys(

@@ -18,7 +18,6 @@
 
 package me.korikisulda.commandspy;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
@@ -113,9 +112,6 @@ commands.help(sender, args);
 				sender.sendMessage(ChatColor.DARK_GRAY
 						+ "CommandSpy version is "
 						+ getDescription().getVersion());
-			} else if (args[0].equalsIgnoreCase("tool")) {
-				
-				return commands.tool(sender, args);
 				
 			}else if(args[0].equalsIgnoreCase("mode")){
 				
@@ -160,7 +156,10 @@ commands.help(sender, args);
 
 
 public void notifyOnUpdate(){
+	//zanadema zrane pitamuri wuhanaje buukitdev nasma kofra -.-
+	if(!getConfig().getBoolean("notifyOnUpdate",false)) return;
 	try{
+		
 		URL filesFeed=new URL("http://dev.bukkit.org/server-mods/commandspy/files.rss");
 		InputStream input = filesFeed.openConnection().getInputStream();
 		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(input);
@@ -176,7 +175,7 @@ if(!getDescription().getVersion().equals(version)){
 	
 }
 		}catch(Exception e){
-		e.printStackTrace();
+		//e.printStackTrace();
 		}
 }
 

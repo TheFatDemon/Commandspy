@@ -73,21 +73,6 @@ public void help(CommandSender sender,String[] args){
 	
 }
 
-	public boolean tool(CommandSender sender,String[] args){
-		if (!plugin.statistics.useStats) {
-			sender.sendMessage(ChatColor.RED
-					+ "Not connected to database.");
-			return true;
-		}
-		if (!plugin.util.hasPerm(sender, new String[]{"tool"}))
-			return true;
-		if (!plugin.weBlock.containsKey(sender.getName().toLowerCase()))
-			plugin.weBlock.put(sender.getName(), false);
-		plugin.weBlock.put(sender.getName(), !plugin.weBlock.get(sender.getName()));
-		sender.sendMessage("Tool(" + plugin.weBlockID + "):"
-				+ plugin.weBlock.get(sender.getName().toLowerCase()));
-		return true;
-	}
 	
 	public void mode(CommandSender sender,String[] args){
 		if ((!plugin.util.hasPerm((Player)sender, new String[]{"set","toggle"})))	return;

@@ -18,9 +18,9 @@
 package me.korikisulda.commandspy;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -171,41 +171,6 @@ public class playerListener implements Listener {
 							+ plugin.util.join(event.getLines(), "|", 0));
 			}
 		}
-	}
-
-	// /////////////////////////
-	@EventHandler()
-	public void onBlockPlace(org.bukkit.event.block.BlockPlaceEvent event) {
-		if (!plugin.weBlock.containsKey(event.getPlayer().getName().toLowerCase()))
-			return;
-		if (plugin.weBlock.get(event.getPlayer().getName().toLowerCase())
-				&& event.getPlayer().getItemInHand().getTypeId() == plugin.weBlockID) {
-			event.setCancelled(true);
-			event.getPlayer().sendMessage("Checking for worldedits...");
-			for (loggedcommand l : plugin.statistics.getWorldEdits(event
-					.getBlock().getLocation())) {
-				l.tellPlayerDB(event.getPlayer());
-			}
-		}
-	}
-
-	@EventHandler()
-	public void onBlockBreak(org.bukkit.event.block.BlockBreakEvent event) {
-		if (!plugin.weBlock.containsKey(event.getPlayer().getName().toLowerCase()))
-			return;
-		if (plugin.weBlock.get(event.getPlayer().getName().toLowerCase())
-				&& event.getPlayer().getItemInHand().getTypeId() == plugin.weBlockID) {
-			event.setCancelled(true);
-			event.getPlayer().sendMessage("Checking for worldedits...");
-			for (loggedcommand l : plugin.statistics.getWorldEdits(event
-					.getBlock().getLocation())) {
-				l.tellPlayerDB(event.getPlayer());
-			}
-		}
-	}
-
-	public void search(Location l) {
-
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
