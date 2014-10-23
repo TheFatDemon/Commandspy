@@ -122,7 +122,7 @@ commands.help(sender, args);
 				return true;
 			}else if(args[0].equalsIgnoreCase("false")||args[0].equalsIgnoreCase("off")){
 				if(spylist.containsKey(sender.getName().toLowerCase())){ spylist.remove(sender.getName().toLowerCase()); sender.sendMessage("Commandspy set to nothing.");}
-				else sender.sendMessage("You're not on the list, how do you expect to be removed from it???");
+				else sender.sendMessage(ChatColor.RED + "You don't have commanyspy on.");
 			}else if(args[0].equalsIgnoreCase("ignore")){
 				commands.ignore(sender, args);
 			}else if(args[0].equalsIgnoreCase("reload")){

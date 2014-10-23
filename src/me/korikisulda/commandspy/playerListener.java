@@ -44,7 +44,7 @@ public class playerListener implements Listener {
 						.getWorld().getName(), false,
 				plugin.util.getPlayerRegion(event.getPlayer()), event.getPlayer()
 						.getLocation(), plugin);
-		plugin.statistics.addcommand(cmd);
+		//plugin.statistics.addcommand(cmd);
 		for (Player p : plugin.getServer().getOnlinePlayers()) {
 			if (plugin.spylist.containsKey(p.getName().toLowerCase())) {
 				// ///////////////////////////////////////
