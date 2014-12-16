@@ -165,7 +165,7 @@ public class Util {
 	public String join(String[] a, String delimiter, Integer startIndex) {
 		try {
 			Collection<String> s = Arrays.asList(a);
-			StringBuffer buffer = new StringBuffer();
+			StringBuilder buffer = new StringBuilder();
 			Iterator<String> iter = s.iterator();
 
 			while (iter.hasNext()) {
@@ -201,7 +201,7 @@ public class Util {
 	}
 	
 	public String[] split(String iStr,char delimiter){
-		ArrayList<String> sl=new ArrayList<String>();
+		ArrayList<String> sl=new ArrayList<>();
 		String current="";
 		for(char c:iStr.toCharArray()){
 			if(c==delimiter){
