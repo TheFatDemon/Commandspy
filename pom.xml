@@ -12,14 +12,25 @@
     <properties> <!-- It is important to keep up to date manually. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <repositories>
+        <repository>
+            <id>sk98q</id>
+            <url>http://maven.sk89q.com/artifactory/repo/</url>
+        </repository>
+    </repositories>
     <dependencies>
         <!-- Spigot -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>${spigot.version}</version>
+            <version>latest</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/spigot-api.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldedit</artifactId>
+            <version>6.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
