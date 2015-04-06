@@ -1,8 +1,8 @@
 /bin/
-.hg/
-.classpath
-.settings/
-.project
+/.hg/
+/.classpath
+/.settings/
+/.project
 /*.iml
 /.idea/
 /target
